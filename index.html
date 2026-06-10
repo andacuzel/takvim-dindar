@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Takvim Dindar — FIFA Dünya Kupası 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0A0E1A;
+  --ink2:#131929;
+  --neon:#C8F135;
+  --neon2:#A3D810;
+  --muted:#8A96B0;
+  --surface:#1A2035;
+  --surface2:#222B42;
+  --text:#EEF2FF;
+  --text2:#A8B4D0;
+  --red:#FF4D6A;
+  --draw:#F0C040;
+  --radius:16px;
+  --font:'Bricolage Grotesque',sans-serif;
+}
+html,body{background:var(--ink);color:var(--text);font-family:var(--font);min-height:100vh;overflow-x:hidden}
+
+.page{max-width:480px;margin:0 auto;padding:0 20px 80px}
+
+/* HERO */
+.hero{padding:52px 0 32px;position:relative;overflow:hidden}
+.hero-stripe{position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--neon);border-radius:0 4px 4px 0}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.12em;color:var(--neon);text-transform:uppercase;margin-bottom:16px;padding-left:16px}
+.hero-heading{font-size:58px;font-weight:800;line-height:.95;letter-spacing:-.03em;padding-left:16px}
+.hero-heading span{color:var(--neon)}
+.hero-sub{font-size:16px;color:var(--text2);margin-top:14px;line-height:1.55;padding-left:16px;font-weight:300}
+
+.btn-dl{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:28px 0 0 16px;background:var(--neon);color:var(--ink);border:none;border-radius:14px;padding:18px 22px;font-size:17px;font-weight:700;font-family:var(--font);cursor:pointer;text-decoration:none;width:calc(100% - 16px);transition:background .15s,transform .1s;letter-spacing:-.01em}
+.btn-dl:active{transform:scale(.97)}
+.btn-dl:hover{background:var(--neon2)}
+.btn-dl .arrow{width:32px;height:32px;background:var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+.divider{height:1px;background:var(--surface2);margin:36px 0}
+
+.section-label{font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--neon);text-transform:uppercase;margin-bottom:16px}
+
+/* SCORES */
+.scores-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.scores-title{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.scores-meta{font-size:12px;color:var(--muted);margin-top:2px}
+.refresh-btn{background:var(--surface2);border:none;border-radius:8px;padding:7px 13px;color:var(--text2);font-size:12px;font-family:var(--font);cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s}
+.refresh-btn:hover{background:var(--surface)}
+
+.score-card{background:var(--surface);border-radius:var(--radius);padding:16px;margin-bottom:10px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.04)}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
+.score-card.home-win::before{background:var(--neon)}
+.score-card.away-win::before{background:var(--red)}
+.score-card.draw::before{background:var(--draw)}
+.score-card.live::before{background:var(--red);animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.card-stage{font-size:10px;color:var(--muted);letter-spacing:.06em;font-weight:600;text-transform:uppercase}
+
+.live-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,77,106,.12);border:1px solid rgba(255,77,106,.3);border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;color:var(--red);letter-spacing:.06em}
+.live-dot{width:6px;height:6px;background:var(--red);border-radius:50%;animation:blink 1s infinite}
+.card-status-fin{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.card-time{font-size:12px;font-weight:600;color:var(--text2)}
+
+.teams-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
+.team{display:flex;flex-direction:column;gap:3px}
+.team.away{align-items:flex-end;text-align:right}
+.team-name{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.team-name.winner{color:var(--neon)}
+.team-name.loser{color:var(--muted)}
+
+.score-block{background:var(--surface2);border-radius:10px;padding:8px 14px;text-align:center;min-width:76px}
+.score-num{font-size:26px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.score-sep{color:var(--muted);font-size:20px;margin:0 1px}
+.score-pending{font-size:18px;font-weight:700;color:var(--muted)}
+
+.skeleton{background:var(--surface2);border-radius:12px;height:88px;margin-bottom:10px;overflow:hidden;position:relative}
+.skeleton::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.05) 50%,transparent 100%);animation:shimmer 1.4s infinite}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+.empty-state{text-align:center;padding:36px 16px;color:var(--muted)}
+.empty-state i{font-size:34px;margin-bottom:12px;display:block;opacity:.4}
+.empty-state p{font-size:14px;line-height:1.6}
+
+/* HOW-TO */
+.howto{}
+.step{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--surface2)}
+.step:last-child{border-bottom:none}
+.step-num{width:28px;height:28px;background:var(--neon);color:var(--ink);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;margin-top:2px}
+.step-text p{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
+.step-text span{font-size:13px;color:var(--text2);line-height:1.5}
+
+/* FOOTER */
+.footer{text-align:center;padding-top:28px}
+.footer p{font-size:12px;color:var(--muted);line-height:1.8}
+.footer strong{color:var(--neon)}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-stripe"></div>
+    <div class="hero-eyebrow">FIFA Dünya Kupası 2026</div>
+    <h1 class="hero-heading">Takvim<br><span>Dindar</span></h1>
+    <p class="hero-sub">İhsan Dindar'a bir Dünya Kupası takvimi — tüm 104 maç, Türkiye saatiyle.</p>
+    <a class="btn-dl" href="wc2026_turkey.ics" download="DunyaKupasi2026_TR.ics">
+      <span>Takvimi İndir</span>
+      <div class="arrow">
+        <i class="ti ti-arrow-down" style="font-size:18px;color:var(--neon)" aria-hidden="true"></i>
+      </div>
+    </a>
+  </div>
+
+  <div class="divider"></div>
+
+  <div>
+    <div class="section-label">Maç Sonuçları</div>
+    <div class="scores-header">
+      <div>
+        <div class="scores-title" id="scores-title">Yükleniyor...</div>
+        <div class="scores-meta" id="scores-meta"></div>
+      </div>
+      <button class="refresh-btn" onclick="loadScores()">
+        <i class="ti ti-refresh" style="font-size:14px" aria-hidden="true"></i>
+        Yenile
+      </button>
+    </div>
+    <div id="scores-container">
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div>
+    <div class="section-label">Nasıl Eklenir?</div>
+    <div class="howto">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <p>Takvimi indir</p>
+          <span>Yukarıdaki butona dokun, <strong>.ics</strong> dosyası telefonuna insin.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <p>Dosyayı aç</p>
+          <span>"Google Takvim ile aç" seçeneğine dokun.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <p>İçe aktar</p>
+          <span>Tüm 104 maç otomatik eklenir. Hatırlatıcıları kendin ayarlayabilirsin.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Hazırlayan: <strong>Andaç</strong><br>Kaynak: FIFA.com · Saatler Türkiye (UTC+3)<br>FIFA Dünya Kupası 2026 · 11 Haziran – 19 Temmuz</p>
+  </div>
+
+</div>
+
+<script>
+const ANTHROPIC_API = 'https://api.anthropic.com/v1/messages';
+
+function getTRDateStr(offsetDays) {
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  const tr = new Date(utc + 3 * 3600000);
+  tr.setDate(tr.getDate() + offsetDays);
+  return tr.toISOString().split('T')[0];
+}
+
+function buildPrompt(dateStr) {
+  return `Sen bir FIFA 2026 Dünya Kupası skor asistanısın. Bugünün tarihi: ${dateStr} (Türkiye saati, UTC+3).
+
+Web'de arama yaparak bu tarihe ait FIFA Dünya Kupası 2026 maç sonuçlarını bul.
+
+SADECE şu JSON formatında yanıt ver, başka hiçbir metin ekleme:
+
+{"matches":[{"home":"takım","away":"takım","score_home":null,"score_away":null,"status":"FT","minute":null,"stage":"Grup A","tr_time":"22:00"}],"date_label":"13 Haziran, Cuma","note":""}
+
+Kurallar:
+- status: "FT" (bitti), "LIVE" (canlı), "HT" (devre arası), "NS" (başlamadı)
+- Sonucu bilmiyorsan score_home ve score_away null yaz
+- Tüm takım adları Türkçe
+- Sadece bu tarihe ait maçları listele
+- JSON dışında hiçbir şey yazma`;
+}
+
+async function loadScores() {
+  const container = document.getElementById('scores-container');
+  const titleEl = document.getElementById('scores-title');
+  const metaEl = document.getElementById('scores-meta');
+
+  container.innerHTML = '<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>';
+  titleEl.textContent = 'Yükleniyor...';
+  metaEl.textContent = '';
+
+  const dateStr = getTRDateStr(0);
+
+  try {
+    const res = await fetch(ANTHROPIC_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        messages: [{ role: 'user', content: buildPrompt(dateStr) }]
+      })
+    });
+
+    const data = await res.json();
+    const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
+    const clean = text.replace(/```json|```/g, '').trim();
+
+    let parsed;
+    try {
+      parsed = JSON.parse(clean);
+    } catch(e) {
+      const m = clean.match(/\{[\s\S]*\}/);
+      if (m) parsed = JSON.parse(m[0]);
+      else throw new Error('parse');
+    }
+
+    titleEl.textContent = parsed.date_label || dateStr;
+    metaEl.textContent = parsed.note || '';
+    renderScores(parsed.matches || []);
+
+  } catch(err) {
+    titleEl.textContent = 'Sonuçlar';
+    container.innerHTML = `<div class="empty-state"><i class="ti ti-wifi-off"></i><p>Sonuçlar şu an yüklenemiyor.<br>Lütfen biraz sonra tekrar deneyin.</p></div>`;
+  }
+}
+
+function renderScores(matches) {
+  const container = document.getElementById('scores-container');
+  if (!matches.length) {
+    container.innerHTML = `<div class="empty-state"><i class="ti ti-calendar-off"></i><p>Bugün oynanacak ya da oynanan maç bulunamadı.</p></div>`;
+    return;
+  }
+
+  container.innerHTML = matches.map(m => {
+    const fin = m.status === 'FT' || m.status === 'HT';
+    const live = m.status === 'LIVE';
+    const hasScore = m.score_home !== null && m.score_away !== null;
+
+    let cardClass = '', hClass = '', aClass = '';
+    if (fin && hasScore) {
+      if (m.score_home > m.score_away) { cardClass = 'home-win'; hClass = 'winner'; aClass = 'loser'; }
+      else if (m.score_away > m.score_home) { cardClass = 'away-win'; aClass = 'winner'; hClass = 'loser'; }
+      else cardClass = 'draw';
+    }
+    if (live) cardClass = 'live';
+
+    const statusHtml = live
+      ? `<span class="live-badge"><span class="live-dot"></span>${m.minute ? m.minute + "'" : 'CANLI'}</span>`
+      : fin
+        ? `<span class="card-status-fin">Bitti</span>`
+        : `<span class="card-time">${m.tr_time || '--:--'}</span>`;
+
+    const scoreHtml = hasScore
+      ? `<div class="score-num">${m.score_home}<span class="score-sep">-</span>${m.score_away}</div>`
+      : `<div class="score-pending">${m.tr_time || '--:--'}</div>`;
+
+    return `<div class="score-card ${cardClass}">
+      <div class="card-top">
+        <span class="card-stage">${m.stage || ''}</span>
+        ${statusHtml}
+      </div>
+      <div class="teams-row">
+        <div class="team home"><span class="team-name ${hClass}">${m.home}</span></div>
+        <div class="score-block">${scoreHtml}</div>
+        <div class="team away"><span class="team-name ${aClass}">${m.away}</span></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+loadScores();
+</script>
+</body>
+</html>
